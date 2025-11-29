@@ -6,7 +6,6 @@ name = "pypi"
 [packages]
 yfinance = "*"
 polars = "*"
-twilio = "*"
 numpy = "*"
 scipy = "*"
 scikit-learn = "*"

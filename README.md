@@ -1,1 +1,1 @@
-# market_monitor
+`pip install -e .`
