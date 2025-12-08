@@ -42,7 +42,7 @@ def get_last_ticker_data(ticker: str) -> Optional[Dict[str, Union[int, float]]]:
 def get_ticker_mean_pct_change(ticker: str) -> float:
     stock_data = yf.Ticker(ticker).history(interval="1h", period="1d", prepost=True).dropna()
     stock_data["percentage_change"] = stock_data["Close"].pct_change()
-    return stock_data["percentage_change"].dropna().mean().item()
+    return stock_data["percentage_change"].dropna().mean()
 
 
 def create_system_status_file():
