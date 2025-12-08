@@ -211,3 +211,4 @@ notify_numbers
 
 requirements.txt
 system_market_status
+ticker_states.json

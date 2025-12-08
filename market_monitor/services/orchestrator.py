@@ -1,4 +1,7 @@
 from typing import List
+from datetime import datetime
+from zoneinfo import ZoneInfo
+from time import sleep
 from market_monitor.services.utilities import (
     is_market_open,
     get_tickers_to_watch,
@@ -38,7 +41,7 @@ def _check_indicators(tickers_to_watch: List[str], market_closed: bool):
             if in_golden_zone and not already_in_golden_zone:
                 fibonacci_message = (
                     f"Fibonacci retracement analysis shows that {ticker} has entered its golden "
-                    f"zone. % change over the last day is {pct_change:.4f}"
+                    f"zone. Average % change over the last 4 hours is {pct_change:.4f}"
                 )
                 send_notification(
                     message=fibonacci_message
@@ -75,6 +78,22 @@ def perform_market_check():
         tickers_to_watch=tickers_to_watch,
         market_closed=market_closed
     )
+
+
+def start_monitoring_market():
+    send_notification(message=f"starting to monitor market", to_admin=True)
+    end_datetime = datetime.now().astimezone(ZoneInfo("America/New_York")).replace(hour=20, minute=0, second=0, microsecond=0)
+    in_monitor_time = True
+    while in_monitor_time:
+        try:
+            now = datetime.now().astimezone(ZoneInfo("America/New_York"))
+            in_monitor_time = now <= end_datetime
+            perform_market_check()
+            sleep(300)
+        except Exception as e:
+            in_monitor_time = False
+            send_notification(message=f"application problem {str(e)}", to_admin=True)
+    send_notification(message=f"market monitoring ended", to_admin=True)
         
             
 
