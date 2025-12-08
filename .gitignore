@@ -209,3 +209,5 @@ __marimo__/
 *.ipynb
 notify_numbers
 
+requirements.txt
+system_market_status

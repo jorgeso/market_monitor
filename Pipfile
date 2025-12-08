@@ -5,15 +5,13 @@ name = "pypi"
 
 [packages]
 yfinance = "*"
-polars = "*"
 numpy = "*"
-scipy = "*"
-scikit-learn = "*"
+pandas = "*"
+python-dotenv = "*"
 
 [dev-packages]
 ipykernel = "*"
 matplotlib = "*"
-pandas = "*"
 
 [requires]
 python_version = "3.13"
