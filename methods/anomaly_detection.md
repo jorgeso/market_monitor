@@ -2,7 +2,7 @@
 
 Credit: [How to Detect Anomalies in Time Series Data in Python](https://www.statology.org/how-to-detect-anomalies-in-time-series-data-in-python/)
 
-I followed the article above to create a method for detecting anomalies in the S&P 500. Since I'm trying to create an up-to-date notification system. I tested with data from the last 14 days, 1-hour intervals, and calculated the rolling mean using 5-hour windows. I tested different z-score thresholds and determined a threshold of 3 was the most reasonable.
+I followed the article above to create a method for detecting anomalies in the Apple stock. Since I'm trying to create an up-to-date notification system. I tested with data from the last 14 days, 1-hour intervals, and calculated the rolling mean using 5-hour windows. I tested different z-score thresholds and determined a threshold of 3 was the most reasonable.
 
 Here's the data I used to test and visualize the data:
 
