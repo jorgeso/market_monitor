@@ -3,7 +3,7 @@ from typing import Tuple
 from market_monitor.services.utilities import get_ticker_mean_pct_change
 
 def is_in_golden_zone(ticker: str, interval: str="5m", period: str="10d") -> Tuple[bool, float]:
-    stock_data = yf.Ticker(ticker).history(interval=interval, period=period).dropna()
+    stock_data = yf.Ticker(ticker).history(interval=interval, period=period, prepost=True).dropna()
     # Fibonacci constants
     max_value = stock_data['Close'].max()
     min_value = stock_data['Close'].min()

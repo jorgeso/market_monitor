@@ -4,7 +4,7 @@ import numpy as np
 def check_for_anomalies(ticker: str, interval: str="5m", period: str="10d", rolling_window=10, threshold = 3):
 
     anomalies = []
-    stock_data = yf.Ticker(ticker).history(interval=interval, period=period).dropna()
+    stock_data = yf.Ticker(ticker).history(interval=interval, period=period, prepost=True).dropna()
     if len(stock_data) == 0:
         return anomalies
 
