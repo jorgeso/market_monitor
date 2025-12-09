@@ -23,10 +23,10 @@ def has_data(ticker) -> bool:
         return False
     last_data_datetime = stock_data.index[-1]
     now = datetime.now()
-    one_hour_ago = now - timedelta(minutes=60)
-    one_hour_ago = one_hour_ago.replace(tzinfo=last_data_datetime.tzinfo)
+    five_minutes_ago = now - timedelta(minutes=5)
+    five_minutes_ago = five_minutes_ago.replace(tzinfo=last_data_datetime.tzinfo)
 
-    return last_data_datetime > one_hour_ago
+    return last_data_datetime > five_minutes_ago
 
 def get_last_ticker_data(ticker: str) -> Optional[Dict[str, Union[int, float]]]:
 

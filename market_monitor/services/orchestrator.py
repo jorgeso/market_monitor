@@ -30,13 +30,15 @@ def _check_indicators(tickers_to_watch: List[str], market_closed: bool):
                     message += f" {key}={value:.3f},"
                 message = message[:-1]
                 send_notification(
-                    message=message
+                    message=message,
+                    ticker=ticker
                 )
         if has_data(ticker=ticker):
             anomalies = check_for_anomalies(ticker=ticker)
             for anomaly in anomalies:
                 send_notification(
-                    message=f"Anomaly detected for {ticker} {anomaly['property']} = {anomaly['value']}"
+                    message=f"Anomaly detected for {ticker} {anomaly['property']} = {anomaly['value']}",
+                    ticker=ticker
                 )
             if in_golden_zone and not already_in_golden_zone:
                 fibonacci_message = (
@@ -44,12 +46,14 @@ def _check_indicators(tickers_to_watch: List[str], market_closed: bool):
                     f"zone. Average % change over the last 4 hours is {pct_change:.4f}"
                 )
                 send_notification(
-                    message=fibonacci_message
+                    message=fibonacci_message,
+                    ticker=ticker
                 )
                 update_ticker_state(ticker=ticker, key=fibonacci_golden_zone_key, value=True)
             elif already_in_golden_zone and not in_golden_zone:
                 send_notification(
-                    message=f"Fibonacci retracement analysis shows that {ticker} has exited its golden zone."
+                    message=f"Fibonacci retracement analysis shows that {ticker} has exited its golden zone.",
+                    ticker=ticker
                 )
                 update_ticker_state(ticker=ticker, key=fibonacci_golden_zone_key, value=False)
 
@@ -83,15 +87,15 @@ def perform_market_check():
 def start_monitoring_market():
     send_notification(message=f"starting to monitor market", to_admin=True)
     end_datetime = datetime.now().astimezone(ZoneInfo("America/New_York")).replace(hour=20, minute=0, second=0, microsecond=0)
-    in_monitor_time = True
-    while in_monitor_time:
+    continue_to_monitor = True
+    while continue_to_monitor:
         try:
             now = datetime.now().astimezone(ZoneInfo("America/New_York"))
-            in_monitor_time = now <= end_datetime
+            continue_to_monitor = now <= end_datetime
             perform_market_check()
             sleep(300)
         except Exception as e:
-            in_monitor_time = False
+            continue_to_monitor = False
             send_notification(message=f"application problem {str(e)}", to_admin=True)
     send_notification(message=f"market monitoring ended", to_admin=True)
         
